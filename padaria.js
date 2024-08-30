@@ -4,9 +4,8 @@ textoIntro.innerHTML = 'Padaria Do Joquinha!'
 var paragrafo = document.querySelector('p')
 paragrafo.innerHTML = "Olá, seja bem vinde!! <br> Abaixo você poderá visualizar o nosso cardapio :)"
 
-
-     
    // Lista de preços dos produtos
+   var pedidos = [];
    var precos = {
     "100": 9.80,
     "101": 5.60,
@@ -22,12 +21,23 @@ function pedidoCliente() {
 
     if (precos[codigo]) {
         total = precos[codigo] * quantidade;
-        exibePedido(total);
+        pedidos.push(total); // Adiciona o total do item ao array de pedidos
+        exibePedido(`Item adicionado. Total até agora: R$ ${somarPedidos().toFixed(2)}`);
     } else {
         exibePedido('Código inválido. Por favor, tente novamente.');
     }
 }
 
 function exibePedido(mensagem) {
-    document.getElementById('guiaPedido').innerHTML = typeof mensagem === 'number' ? `Total: R$ ${mensagem.toFixed(2)}` : mensagem;
+    document.getElementById('guiaPedido').innerHTML = mensagem;
+}
+
+function somarPedidos() {
+    return pedidos.reduce((acc, curr) => acc + curr, 0); // Soma todos os valores no array de pedidos
+}
+
+function finalizarPedido() {
+    var totalFinal = somarPedidos();
+    exibePedido(`Pedido finalizado! Total a pagar: R$ ${totalFinal.toFixed(2)}`);
+    pedidos = []; // Limpa o array de pedidos após finalizar
 }
