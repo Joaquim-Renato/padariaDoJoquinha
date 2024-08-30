@@ -1,21 +1,33 @@
 var textoIntro = document.querySelector('h1')
-textoIntro.innerHTML = 'Padaria Do Joaquinha!'
+textoIntro.innerHTML = 'Padaria Do Joquinha!'
 
 var paragrafo = document.querySelector('p')
 paragrafo.innerHTML = "Olá, seja bem vinde!! <br> Abaixo você poderá visualizar o nosso cardapio :)"
 
 
+     
+   // Lista de preços dos produtos
+   var precos = {
+    "100": 9.80,
+    "101": 5.60,
+    "102": 7.20,
+    "103": 12.30,
+    "104": 16.90
+};
 
-var tabela = '<table>';
-tabela += '<tr><th>Código</th><th>Produto</th><th>Preço</th></tr>'; // Cabeçalho da tabela
-tabela += '<tr><td>100</td><td>Cachorro quente</td><td>R$ 9.80</td></tr>';
-tabela += '<tr><td>101</td><td>Bauru Simples</td><td>R$ 5.60</td></tr>';
-tabela += '<tr><td>102</td><td>Bauru com ovo</td><td>R$ 7.20</td></tr>';
-tabela += '<tr><td>103</td><td>Hamburguer</td><td>R$ 12.30</td></tr>';
-tabela += '<tr><td>104</td><td>Cheeseburguer</td><td>R$ 16.90</td></tr>';
-tabela += '</table>';
+function pedidoCliente() {
+    var codigo = document.getElementById('pedidoCliente').value;
+    var quantidade = parseInt(document.getElementById('qtd').value);
+    var total;
 
-// Exibir a tabela no documento
-document.write(tabela);
+    if (precos[codigo]) {
+        total = precos[codigo] * quantidade;
+        exibePedido(total);
+    } else {
+        exibePedido('Código inválido. Por favor, tente novamente.');
+    }
+}
 
-function pedidoCliente() {}
+function exibePedido(mensagem) {
+    document.getElementById('guiaPedido').innerHTML = typeof mensagem === 'number' ? `Total: R$ ${mensagem.toFixed(2)}` : mensagem;
+}
